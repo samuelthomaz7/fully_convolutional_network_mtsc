@@ -2,7 +2,7 @@ import pandas as pd
 
 class GetDummiesLabels():
 
-    def __init__(self, X_raw, y_raw, metadata):
+    def __init__(self, X_raw, y_raw, metadata = None):
         self.X_raw = X_raw
         self.y_raw = y_raw
         self.metadata = metadata
