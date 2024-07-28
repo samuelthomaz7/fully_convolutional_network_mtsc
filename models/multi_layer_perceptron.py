@@ -7,9 +7,8 @@ from models.nn_model import NNModel
 class MultiLayerPerceprtron(NNModel):
 
     def __init__(self, X_train, X_test, y_train, y_test, metadata, random_state=42):
-        super().__init__(X_train, X_test, y_train, y_test, metadata, random_state)
+        super().__init__(X_train, X_test, y_train, y_test, metadata, 'MultiLayerPerceprtron', random_state)
 
-        self.model_name = 'MultiLayerPerceprtron'
 
         inputs = layers.Input(shape= (X_train.shape[1], X_train.shape[2]))
         output = layers.Flatten() (inputs)
