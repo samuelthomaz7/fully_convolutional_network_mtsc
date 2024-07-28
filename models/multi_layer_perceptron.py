@@ -59,6 +59,6 @@ class MultiLayerPerceprtron(NNModel):
 
         return self.history
     
-    def training_proces(self):
-        return super().training_proces()
+    def training_process(self):
+        return super().training_process()
 

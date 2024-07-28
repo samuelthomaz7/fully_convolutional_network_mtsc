@@ -60,7 +60,7 @@ class NNModel():
         return self.history
 
 
-    def training_proces(self):
+    def training_process(self):
 
         self.compile()
         self.fit()
