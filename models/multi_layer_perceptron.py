@@ -26,38 +26,12 @@ class MultiLayerPerceprtron(NNModel):
             name = self.model_name
         )
 
-
     def compile(self):
-
-        if len(self.metadata['class_values']) > 2:
-            loss = losses.CategoricalCrossentropy()
-        else:
-            loss = losses.BinaryCrossentropy()
-
-        self.complied_model = self.model.compile(
-            optimizer= optimizers.Adam(learning_rate= 0.001),
-            metrics= [
-                keras.metrics.Accuracy(),
-                keras.metrics.F1Score()
-            ],
-            loss= loss
-        )
-        
-        return self.complied_model
+        return super().compile()
     
 
     def fit(self):
-
-        self.history = self.model.fit(
-            x = self.X_train,
-            y = self.y_train,
-            validation_data = (self.X_test, self.y_test),
-            epochs= self.epochs,
-            callbacks=self.callbacks
-        )
-
-
-        return self.history
+        return super().fit()
     
     def training_process(self):
         return super().training_process()

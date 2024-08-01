@@ -1,12 +1,17 @@
 
 import os
+import tensorflow as tf
 from tensorflow import keras
-from keras import callbacks
+from keras import layers, optimizers, losses, Model, callbacks
+from utils import set_seeds
+
 
 class NNModel():
 
 
     def __init__(self, X_train, X_test, y_train, y_test, metadata, model_name, random_state = 42):
+        
+        set_seeds(seed=random_state)
         self.X_train = X_train
         self.X_test = X_test
         self.y_train = y_train
@@ -14,7 +19,9 @@ class NNModel():
         self.metadata = metadata
         self.random_state = random_state
         self.model_name = model_name
-        self.epochs = 1000
+        self.epochs = 10
+
+        
 
         self.model_folder = self.model_name + '_' + self.metadata['problemname'].replace(' ', '_') + '_' + str(self.random_state)
 
@@ -49,14 +56,38 @@ class NNModel():
             
 
 
+    
     def compile(self):
-        pass
+
+        if len(self.metadata['class_values']) > 2:
+            loss = losses.CategoricalCrossentropy()
+        else:
+            loss = losses.BinaryCrossentropy()
+
+        self.complied_model = self.model.compile(
+            optimizer= optimizers.Adam(learning_rate= 0.001),
+            metrics= [
+                keras.metrics.Accuracy(),
+                keras.metrics.F1Score()
+            ],
+            loss= loss
+        )
+        
+        return self.complied_model
 
     
 
     def fit(self):
-        self.history = None
-        
+
+        self.history = self.model.fit(
+            x = self.X_train,
+            y = self.y_train,
+            validation_data = (self.X_test, self.y_test),
+            epochs= self.epochs,
+            callbacks=self.callbacks
+        )
+
+
         return self.history
 
 

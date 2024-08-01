@@ -41,6 +41,13 @@ data = {
 
 available_seires = pd.DataFrame(data)
 
+def read_dataset_from_file(dataset_name):
+    with open(f'./downloaded_datasets/{dataset_name}.pkl', 'rb') as f:
+            dataset = pickle.load(f) 
+
+
+    return dataset
+
 def get_all_datasets(read_from_path = True):
 
     if read_from_path == True:
@@ -54,12 +61,27 @@ def get_all_datasets(read_from_path = True):
         print('Downloading datasets')
         datasets_info = {}
         for dataset in tqdm(data['Dataset']):
-            datasets_info[dataset] = datasets.load_classification(
-                name=dataset,
-                return_metadata=True
-            )
+            
+            print(dataset)
+            if (dataset + '.pkl') not in os.listdir('./downloaded_datasets/'):
 
-            break
+                try:
+                    ds_object = datasets.load_classification(
+                        name=dataset,
+                        return_metadata=True
+                    )
+
+                    with open(f'./downloaded_datasets/{dataset}.pkl', 'wb') as f:  # open a text file
+                        pickle.dump(ds_object, f)
+
+                    datasets_info[dataset] = ds_object
+                except Exception as e:
+                    print(f'The dataset {dataset} was not downloaded, due to {e}')
+            else:
+                with open(f'./downloaded_datasets/{dataset}.pkl', 'rb') as f:
+                    datasets_info[dataset] = pickle.load(f) 
+
+
 
         print('Download completed')
 
