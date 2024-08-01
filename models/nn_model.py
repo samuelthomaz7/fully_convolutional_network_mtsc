@@ -3,7 +3,7 @@ import os
 import tensorflow as tf
 from tensorflow import keras
 from keras import layers, optimizers, losses, Model, callbacks
-from utils import set_seeds
+from utils_file import set_seeds
 
 
 class NNModel():
