@@ -31,7 +31,8 @@ def training_nn_for_seeds(used_model, datasets = [], seeds = []):
             train_test_object = TrainTestSplit(
                 X_raw= X,
                 y_raw= y,
-                metadata= metadata
+                metadata= metadata,
+                random_state = random_state
             )
 
             X_train, X_test, y_train, y_test = train_test_object.transform()
