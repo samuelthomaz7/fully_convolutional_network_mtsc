@@ -12,15 +12,15 @@ class FullyConvolutionalNetwork(NNModel):
 
         inputs = layers.Input(shape= (X_train.shape[1], X_train.shape[2]))
 
-        output = layers.Conv1D(filters=128, kernel_size= (8, )) (inputs) 
+        output = layers.Conv1D(filters=128, padding="same", strides=1, kernel_size= (8, )) (inputs) 
         output = layers.BatchNormalization() (output) 
         output = layers.ReLU() (output)
 
-        output = layers.Conv1D(filters=256, kernel_size= (5, )) (output)
+        output = layers.Conv1D(filters=256, padding="same", strides=1, kernel_size= (5, )) (output)
         output = layers.BatchNormalization() (output) 
         output = layers.ReLU() (output)
 
-        output = layers.Conv1D(filters=128, kernel_size= (3, )) (output)
+        output = layers.Conv1D(filters=128, padding="same", strides=1, kernel_size= (3, )) (output)
         output = layers.BatchNormalization() (output) 
         output = layers.ReLU() (output)
 

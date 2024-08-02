@@ -29,7 +29,6 @@ class MultiLayerPerceprtron(NNModel):
     def compile(self):
         return super().compile()
     
-
     def fit(self):
         return super().fit()
     

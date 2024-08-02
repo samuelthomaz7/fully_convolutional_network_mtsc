@@ -19,7 +19,7 @@ class NNModel():
         self.metadata = metadata
         self.random_state = random_state
         self.model_name = model_name
-        self.epochs = 10
+        self.epochs = 10000
 
         
 
@@ -47,7 +47,7 @@ class NNModel():
             callbacks.ModelCheckpoint(
                 filepath = './model_checkpoints/' + self.model_folder + '/checkpoint.keras',
                 monitor='val_loss',
-                verbose=True,
+                verbose=False,
 
             )
         ]
@@ -84,7 +84,8 @@ class NNModel():
             y = self.y_train,
             validation_data = (self.X_test, self.y_test),
             epochs= self.epochs,
-            callbacks=self.callbacks
+            callbacks=self.callbacks,
+            verbose = False
         )
 
 
