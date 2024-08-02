@@ -20,6 +20,7 @@ class NNModel():
         self.random_state = random_state
         self.model_name = model_name
         self.epochs = 10000
+        self.num_classes = self.metadata['class_values']            
 
         
 
@@ -36,18 +37,19 @@ class NNModel():
             callbacks.EarlyStopping(
                 monitor='val_loss',
                 patience= int(0.5*self.epochs),
-                verbose= True
+                verbose= False
             ),
             callbacks.ReduceLROnPlateau(
                 monitor='val_loss',
                 patience= int(0.1*self.epochs),
-                verbose= True,
+                verbose= False,
                 factor= 0.9
             ),
             callbacks.ModelCheckpoint(
                 filepath = './model_checkpoints/' + self.model_folder + '/checkpoint.keras',
                 monitor='val_loss',
                 verbose=False,
+
 
             )
         ]
@@ -85,7 +87,7 @@ class NNModel():
             validation_data = (self.X_test, self.y_test),
             epochs= self.epochs,
             callbacks=self.callbacks,
-            verbose = False
+            verbose = True
         )
 
 
