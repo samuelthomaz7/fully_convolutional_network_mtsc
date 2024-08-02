@@ -36,6 +36,12 @@ from utils_file import training_nn_for_seeds
 
 training_nn_for_seeds(
     datasets= all_datasets, # type: ignore
-    seeds= list(range(0, 10)),
+    seeds= list(range(1, 11)),
     used_model = FullyConvolutionalNetwork
 )
+
+# training_nn_for_seeds(
+#     datasets= ['AtrialFibrillation'], # type: ignore
+#     seeds= list(range(1, 11)),
+#     used_model = FullyConvolutionalNetwork
+# )

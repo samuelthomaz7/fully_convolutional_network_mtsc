@@ -87,7 +87,7 @@ class NNModel():
             validation_data = (self.X_test, self.y_test),
             epochs= self.epochs,
             callbacks=self.callbacks,
-            verbose = True
+            verbose = False
         )
 
 

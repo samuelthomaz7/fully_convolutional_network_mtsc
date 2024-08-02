@@ -13,5 +13,5 @@ class GetDummiesLabels():
         pass
 
     def transform(self):
-        self.y_dummies = pd.get_dummies([float(i) for i in self.y_raw]).astype(int).values
+        self.y_dummies = pd.get_dummies(self.y_raw).astype(int).values
         return self.X_raw, self.y_dummies

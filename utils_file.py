@@ -2,6 +2,7 @@ import os
 import random
 import tensorflow as tf
 import numpy as np
+from tqdm import tqdm
 
 from input.reading_datasets import read_dataset_from_file
 from preprocessing.get_dummies_labels import GetDummiesLabels
@@ -15,8 +16,8 @@ def set_seeds(seed):
 
 
 def training_nn_for_seeds(used_model, datasets = [], seeds = []):
-    for dataset in datasets:
-        for random_state in seeds:
+    for dataset in tqdm(datasets):
+        for random_state in tqdm(seeds):
             print(f'{dataset} - {random_state}')
             used_dataset = read_dataset_from_file(dataset_name = dataset)
             X, y, metadata = used_dataset
