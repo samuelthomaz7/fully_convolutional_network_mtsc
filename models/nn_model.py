@@ -1,5 +1,6 @@
 
 import os
+import pickle
 import tensorflow as tf
 from tensorflow import keras
 from keras import layers, optimizers, losses, Model, callbacks
@@ -19,7 +20,7 @@ class NNModel():
         self.metadata = metadata
         self.random_state = random_state
         self.model_name = model_name
-        self.epochs = 5000
+        self.epochs = 10
         self.num_classes = self.metadata['class_values']            
 
         
@@ -100,3 +101,10 @@ class NNModel():
 
         self.compile()
         self.fit()
+
+        with open('./model_checkpoints/' + self.model_folder + '/model_history.pkl', 'wb') as f:  # open a text file
+            pickle.dump(self.history, f)
+
+        
+
+        
