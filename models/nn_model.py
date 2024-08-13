@@ -19,7 +19,7 @@ class NNModel():
         self.metadata = metadata
         self.random_state = random_state
         self.model_name = model_name
-        self.epochs = 10000
+        self.epochs = 5000
         self.num_classes = self.metadata['class_values']            
 
         
@@ -35,30 +35,30 @@ class NNModel():
 
         self.callbacks = [
             callbacks.EarlyStopping(
-                monitor='val_loss',
+                monitor='val_accuracy',
                 patience= int(0.5*self.epochs),
-                verbose= False
+                verbose= False,
+                min_delta= 0.0025
             ),
             callbacks.ReduceLROnPlateau(
-                monitor='val_loss',
-                patience= int(0.1*self.epochs),
+                monitor='val_accuracy',
+                patience= int(0.05*self.epochs),
                 verbose= False,
-                factor= 0.9
+                factor= 0.75,
+                min_delta= 0.0025
+
             ),
             callbacks.ModelCheckpoint(
                 filepath = './model_checkpoints/' + self.model_folder + '/checkpoint.keras',
-                monitor='val_loss',
+                monitor='val_accuracy',
                 verbose=False,
+
 
 
             )
         ]
 
 
-            
-
-
-    
     def compile(self):
 
         if len(self.metadata['class_values']) > 2:
@@ -70,7 +70,7 @@ class NNModel():
             optimizer= optimizers.Adam(learning_rate= 0.001),
             metrics= [
                 keras.metrics.Accuracy(),
-                keras.metrics.F1Score()
+                keras.metrics.F1Score(),
             ],
             loss= loss
         )
@@ -87,7 +87,9 @@ class NNModel():
             validation_data = (self.X_test, self.y_test),
             epochs= self.epochs,
             callbacks=self.callbacks,
-            verbose = False
+            verbose = True,
+            batch_size = 16,
+            shuffle = True
         )
 
 

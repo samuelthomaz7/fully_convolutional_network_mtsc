@@ -52,3 +52,4 @@ def training_nn_for_seeds(used_model, datasets = [], seeds = []):
                 pass
             else:
                 model.training_process()
+                print(model.model.evaluate(X_test, y_test))

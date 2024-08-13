@@ -9,6 +9,11 @@ class MultiLayerPerceprtron(NNModel):
     def __init__(self, X_train, X_test, y_train, y_test, metadata, random_state=42):
         super().__init__(X_train, X_test, y_train, y_test, metadata, 'MultiLayerPerceprtron', random_state)
 
+        if len(self.metadata['class_values']) > 2:
+            last_layer_activation = 'softmax'
+        else:
+            last_layer_activation = 'sigmoid'
+
 
         inputs = layers.Input(shape= (X_train.shape[1], X_train.shape[2]))
         output = layers.Flatten() (inputs)
@@ -18,7 +23,7 @@ class MultiLayerPerceprtron(NNModel):
         output = layers.Dropout(rate = 0.2) (output)
         output = layers.Dense(units= 500, activation= 'relu') (output)
         output = layers.Dropout(rate = 0.3) (output)
-        output = layers.Dense(units= len(self.metadata['class_values']), activation= 'softmax') (output)
+        output = layers.Dense(units= len(self.metadata['class_values']), activation= last_layer_activation) (output)
 
         self.model = Model(
             inputs, 
