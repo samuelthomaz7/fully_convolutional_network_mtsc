@@ -14,6 +14,23 @@ def set_seeds(seed):
     tf.random.set_seed(seed)
     np.random.seed(seed)
 
+def closest_power_of_2(n):
+    if n < 1:
+        return 1
+    
+    # Find the next higher power of 2 greater than or equal to n
+    upper_power = 1
+    while upper_power < n:
+        upper_power *= 2
+    
+    # Find the previous lower power of 2 less than or equal to n
+    lower_power = upper_power // 2
+    
+    # Check which of the two is closer to n
+    if abs(n - lower_power) < abs(upper_power - n):
+        return lower_power
+    else:
+        return upper_power
 
 def training_nn_for_seeds(used_model, datasets = [], seeds = []):
     for dataset in tqdm(datasets):

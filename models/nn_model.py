@@ -4,7 +4,7 @@ import pickle
 import tensorflow as tf
 from tensorflow import keras
 from keras import layers, optimizers, losses, Model, callbacks
-from utils_file import set_seeds
+from utils_file import set_seeds, closest_power_of_2
 
 
 class NNModel():
@@ -20,8 +20,9 @@ class NNModel():
         self.metadata = metadata
         self.random_state = random_state
         self.model_name = model_name
-        self.epochs = 10
-        self.num_classes = self.metadata['class_values']            
+        self.epochs = 10000
+        self.num_classes = self.metadata['class_values']
+        self.batch_size = max(closest_power_of_2(int(X_train.shape[0]/10)), 16)         
 
         
 
@@ -49,15 +50,32 @@ class NNModel():
                 min_delta= 0.0025
 
             ),
+            # callbacks.ModelCheckpoint(
+            #     filepath = './model_checkpoints/' + self.model_folder + '/checkpoint.keras',
+            #     monitor='val_accuracy',
+            #     verbose=False,
+            #     save_best_only=True
+            # ),
             callbacks.ModelCheckpoint(
-                filepath = './model_checkpoints/' + self.model_folder + '/checkpoint.keras',
+                filepath = './model_checkpoints/' + self.model_folder + '/checkpoint//weights_epoch_{epoch:02d}.weights.h5',
                 monitor='val_accuracy',
                 verbose=False,
-
-
-
+                save_best_only=False,
+                save_weights_only=True
             )
         ]
+
+    def custom_categorical_crossentropy(self):
+    # Define a função de perda personalizada que será multiplicada pelo fator.
+        def loss(y_true, y_pred):
+            # Use a função de perda CategoricalCrossentropy padrão
+            cce = losses.CategoricalCrossentropy()
+            # Calcule a perda básica
+            base_loss = cce(y_true, y_pred)
+            # Multiplique a perda pelo fator
+            return (10**7) * base_loss
+        
+        return loss
 
 
     def compile(self):
@@ -68,7 +86,7 @@ class NNModel():
             loss = losses.BinaryCrossentropy()
 
         self.complied_model = self.model.compile(
-            optimizer= optimizers.Adam(learning_rate= 0.001),
+            optimizer= optimizers.Adam(learning_rate= 0.01),
             metrics= [
                 keras.metrics.Accuracy(),
                 keras.metrics.F1Score(),
@@ -90,6 +108,7 @@ class NNModel():
             callbacks=self.callbacks,
             verbose = True,
             batch_size = 16,
+            # batch_size = self.batch_size,
             shuffle = True
         )
 

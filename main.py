@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
+
+from models.resnet import ResNet
 # from tensorflow import keras
 # from keras import layers, optimizers, losses, Model
 # from aeon import datasets
@@ -61,6 +63,6 @@ from utils_file import training_nn_for_seeds
 
 training_nn_for_seeds(
     datasets= ['ArticularyWordRecognition'], # type: ignore
-    seeds= list(range(1, 2)),
+    seeds= list(range(1, 11)),
     used_model = FullyConvolutionalNetwork
 )

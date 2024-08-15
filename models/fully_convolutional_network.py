@@ -22,21 +22,23 @@ class FullyConvolutionalNetwork(NNModel):
         inputs = layers.Input(shape= (self.X_train.shape[1], self.X_train.shape[2]))
 
         output = layers.Conv1D(filters=128, padding="same", strides=1, kernel_size= (8, ), data_format='channels_first') (inputs) 
-        # output = layers.BatchNormalization() (output) 
         output = keras.layers.Activation('relu') (output)
         output = layers.BatchNormalization() (output) 
 
         output = layers.Conv1D(filters=256, padding="same", strides=1, kernel_size= (5, ), data_format='channels_first') (output)
-        # output = layers.BatchNormalization() (output) 
         output = keras.layers.Activation('relu') (output)
         output = layers.BatchNormalization() (output) 
 
         output = layers.Conv1D(filters=128, padding="same", strides=1, kernel_size= (3, ), data_format='channels_first') (output)
-        # output = layers.BatchNormalization() (output) 
         output = keras.layers.Activation('relu') (output)
-        # output = layers.BatchNormalization() (output) 
+        output = layers.BatchNormalization() (output) 
 
         output = layers.GlobalAveragePooling1D() (output)
+
+        # output = layers.Dense(units= 128, activation='relu') (output)
+        # output = layers.Dense(units= 128, activation='relu') (output)
+        # output = layers.Dense(units= 128, activation='relu') (output)
+
         output = layers.Dense(units= len(self.metadata['class_values']), activation=last_layer_activation) (output)
 
         self.model = Model(
