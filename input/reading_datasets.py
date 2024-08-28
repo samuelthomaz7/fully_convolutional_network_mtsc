@@ -60,6 +60,10 @@ def get_all_datasets(read_from_path = True):
     else:
         print('Downloading datasets')
         datasets_info = {}
+
+        if './downloaded_datasets/' not in os.listdir('.'):
+            os.mkdir('./downloaded_datasets/')
+
         for dataset in tqdm(data['Dataset']):
             
             print(dataset)
