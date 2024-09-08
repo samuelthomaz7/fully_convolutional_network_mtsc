@@ -15,7 +15,7 @@ from models.resnet import ResNet
 # from models.fully_convolutional_network_2d import FullyConvolutionalNetwork2D
 # from preprocessing.get_dummies_labels import GetDummiesLabels
 # from preprocessing.train_test_split_module import TrainTestSplit
-# from models.multi_layer_perceptron import MultiLayerPerceprtron
+from models.multi_layer_perceptron import MultiLayerPerceprtron
 
 print(tf.config.list_physical_devices('GPU'))
 
@@ -62,7 +62,7 @@ from utils_file import training_nn_for_seeds
 # )
 
 training_nn_for_seeds(
-    datasets= ['ArticularyWordRecognition'], # type: ignore
+    datasets= all_datasets, # type: ignore
     seeds= list(range(1, 11)),
-    used_model = FullyConvolutionalNetwork
+    used_model = MultiLayerPerceprtron
 )

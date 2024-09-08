@@ -20,7 +20,7 @@ class NNModel():
         self.metadata = metadata
         self.random_state = random_state
         self.model_name = model_name
-        self.epochs = 10000
+        self.epochs = 5000
         self.num_classes = self.metadata['class_values']
         self.batch_size = max(closest_power_of_2(int(X_train.shape[0]/10)), 16)         
 
@@ -86,7 +86,7 @@ class NNModel():
             loss = losses.BinaryCrossentropy()
 
         self.complied_model = self.model.compile(
-            optimizer= optimizers.Adam(learning_rate= 0.01),
+            optimizer= optimizers.Adam(learning_rate= 0.001),
             metrics= [
                 keras.metrics.Accuracy(),
                 keras.metrics.F1Score(),
