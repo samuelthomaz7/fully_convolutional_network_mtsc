@@ -103,5 +103,5 @@ def training_nn_for_seeds(used_model, datasets = [], seeds = []):
                 pass
             else:
                 model.training_process()
-                device = cuda.get_current_device()
-                device.reset()
+                # device = cuda.get_current_device()
+                # device.reset()
