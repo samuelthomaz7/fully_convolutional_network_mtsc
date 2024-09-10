@@ -60,7 +60,7 @@ class NNModel():
                 filepath = './model_checkpoints/' + self.model_folder + '/checkpoint//weights_epoch_{epoch:02d}.weights.h5',
                 monitor='val_accuracy',
                 verbose=False,
-                save_best_only=False,
+                save_best_only=True,
                 save_weights_only=True
             )
         ]
